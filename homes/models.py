@@ -48,5 +48,6 @@ class Dorms(models.Model):
     Bathrooms = models.CharField(max_length=50, null= False)
     Price = models.IntegerField(null = False)
     Safety = models.IntegerField(null = False)
+    image = models.ImageField(upload_to='images/', default='default.jpg')
     def __str__(self):
         return self.Name
