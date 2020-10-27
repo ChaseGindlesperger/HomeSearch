@@ -40,3 +40,14 @@ class Food(models.Model):
     Name = models.CharField(max_length=50, null = False)
     def __str__ (self):
         return self.Name
+
+class Dorms(models.Model):
+    Address = models.ForeignKey(Amenities, on_delete= models.CASCADE)
+    Name = models.CharField(max_length=50, null= False)
+    Roomstyle = models.CharField(max_length=50, null= False)
+    Bathrooms = models.CharField(max_length=50, null= False)
+    Price = models.IntegerField(null = False)
+    Safety = models.IntegerField(null = False)
+    image = models.ImageField(upload_to='images/', default='default.jpg')
+    def __str__(self):
+        return self.Name
