@@ -22,6 +22,7 @@ class House(models.Model):
     Bathrooms = models.DecimalField(null = False, max_digits = 2, decimal_places = 1)
     Price = models.IntegerField(null = False)
     Safety = models.IntegerField(null = False)
+    image = models.ImageField(upload_to='images/', default='default.jpg')
     def __str__(self):
         return self.Address
 
@@ -32,6 +33,7 @@ class Apartment(models.Model):
     Bathrooms = models.DecimalField(null = False, max_digits = 2, decimal_places = 1)
     Price = models.IntegerField(null = False)
     Safety = models.IntegerField(null = False)
+    image = models.ImageField(upload_to='images/', default='default.jpg')
     def __str__(self):
         return self.Name
 
