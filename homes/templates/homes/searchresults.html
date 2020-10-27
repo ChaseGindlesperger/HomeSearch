@@ -1,0 +1,9 @@
+<h1>Search Results</h1>
+
+<ul>
+  {% for home in homes_list %}
+    <li>
+      {{ home.Name }}, {{ home.Address }}
+    </li>
+  {% endfor %}
+</ul>
