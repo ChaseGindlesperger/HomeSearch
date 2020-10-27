@@ -21,7 +21,7 @@ class House(models.Model):
     Safety = models.CharField(null = False, default='N/A', max_length=50, choices=[('Least Safe', 'Least Safe'), ('Less Safe', 'Less Safe'), ('More Safe', 'More Safe'), ('Most Safe', 'Most Safe')])
     image = models.ImageField(upload_to='images/', default='default.jpg')
     def __str__(self):
-        return self.Address
+        return self.Name
 
 class Apartment(models.Model):
     Address = models.ForeignKey(Amenities, on_delete= models.CASCADE)
