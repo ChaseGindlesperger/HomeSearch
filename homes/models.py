@@ -47,7 +47,7 @@ class Dorms(models.Model):
     amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
     Address = models.CharField(max_length=50)
     Name = models.CharField(max_length=50, null= False)
-    Roomstyle = models.CharField(null = False, default='N/A', max_length=50, choices=[('Single', 'Single'), ('Shared Single', 'Shared Single'), ('Double', 'Double'), ('Triple', 'Triple')])
+    Roomstyle = models.CharField(null = False, default='N/A', max_length=50, choices=[('Single', 'Single'), ('Shared Single', 'Shared Single'), ('Double', 'Double'), ('Triple', 'Triple'), ('Suite', 'Suite'), ('Apartment', 'Apartment')])
     Bathrooms = models.CharField(null = False, default='N/A', max_length=50, choices=[('Private', 'Private'), ('Communal', 'Communal')])
     Price = models.IntegerField(null = False)
     Safety = models.CharField(null = False, default='N/A', max_length=50, choices=[('Least Safe', 'Least Safe'), ('Less Safe', 'Less Safe'), ('More Safe', 'More Safe'), ('Most Safe', 'Most Safe')])
