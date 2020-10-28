@@ -15,7 +15,7 @@ class Amenities(models.Model):
         return self.Address
 
 class House(models.Model):
-    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE, default='0')
+    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
     Address = models.CharField(max_length=50)
     Bedrooms = models.IntegerField(null= False)
     Bathrooms = models.DecimalField(null = False, max_digits = 2, decimal_places = 1)
@@ -26,7 +26,7 @@ class House(models.Model):
         return self.Address
 
 class Apartment(models.Model):
-    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE, default='0')
+    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
     Address = models.CharField(max_length=50)
     Name = models.CharField(max_length=50, null= False)
     Bedrooms = models.IntegerField(null= False)
@@ -44,7 +44,7 @@ class Food(models.Model):
         return self.Name
 
 class Dorms(models.Model):
-    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE, default='0')
+    amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
     Address = models.CharField(max_length=50)
     Name = models.CharField(max_length=50, null= False)
     Roomstyle = models.CharField(null = False, default='N/A', max_length=50, choices=[('Single', 'Single'), ('Shared Single', 'Shared Single'), ('Double', 'Double'), ('Triple', 'Triple')])
