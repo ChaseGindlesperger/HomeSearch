@@ -1,5 +1,61 @@
+<script>
+    function setInputFilter(textbox, inputFilter) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+    textbox.addEventListener(event, function() {
+      if (inputFilter(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+      } else if (this.hasOwnProperty("oldValue")) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+      } else {
+        this.value = "";
+      }
+    });
+  });
+
+  setInputFilter(document.getElementById("price"), function(value) {
+    return /^-?\d*$/.test(value); 
+  });
+
+  setInputFilter(document.getElementById("bedrooms"), function(value) {
+    return /^-?\d*$/.test(value); 
+  });
+}
+</script>
+
+<style>
+    #priceselect 
+    {
+        width: 100px;
+    }
+</style>
+
 <h1> SEARCH</h1>
 <form method="GET" action = "./search_results">
-    <input id='search' type='text' name='search' placeholder='Search...'>
+    <label for="type">Type:</label>
+    <select id="type" name="type">
+        <option value="All" selected>All</option>
+        <option value="House">House</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Dorm">Dormitory</option>
+    </select><br />
+    <input id='search' type='text' name='search' placeholder='Address search...'><br />
+    <p>Price</p>
+    <select id='priceselect' name='priceselect'>
+        <option value='Less than'>Less than</option>
+        <option value='Equal to'>Equal to</option>
+        <option value='Greater than'>More than</option>
+    </select>
+    <input id='price' type='text' name='price' placeholder='Price...'><br />
+    <select id='safety' name='safety'>
+        <option value='Least Safe'>Least Safe</option>
+        <option value='Less Safe'>Less Safe</option>
+        <option value='More Safe'>More Safe</option>
+        <option value='Most Safe'>Most Safe</option>
+    </select><br />
+    <p>Bedrooms:</p>
+    <input id='bedrooms' type='text' name='bedrooms'><br />
     <button id='submit' type='submit'>Submit</button>
 </form>
