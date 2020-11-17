@@ -4,11 +4,30 @@ from django.shortcuts import render
 from django.db.models import QuerySet
 from homes.models import House, Apartment, Dorms, Amenities
 from . import filters
+from django.views import generic
 
 # Create your views here.
 
+def homepage(request):
+    return render(request, 'homes/homepage.html')
+
 def index(request):
     return render(request, 'homes/index.html')
+
+def info(request):
+        home = request.GET.get('home')
+        if House.objects.filter(Address = home).count():
+            info = House.objects.get(Address = home)
+        elif Apartment.objects.filter(Name = home).count() > 0:
+            info = Apartment.objects.get(Name = home)
+        elif Dorms.objects.filter(Name = home).count() > 0:
+            info = Dorm.objects.get(Name = home)
+        #houses = House.objects.filter(Address__icontains=home)
+        #apartments = Apartment.objects.filter(Address__icontains=home)
+        #dorms = Dorms.objects.filter(Address__icontains=home)
+        #home_info = chain(houses, apartments, dorms)
+
+        return render(request, 'homes/info.html', {'home':info})
 
 def search(request):
     houses = QuerySet()
