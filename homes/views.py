@@ -1,33 +1,35 @@
 from itertools import chain
-import pdb
 from django.shortcuts import render
 from django.db.models import QuerySet
 from homes.models import House, Apartment, Dorms, Amenities
 from . import filters
-from django.views import generic
 
 # Create your views here.
+
 
 def homepage(request):
     return render(request, 'homes/homepage.html')
 
+
 def index(request):
     return render(request, 'homes/index.html')
 
-def info(request):
-        home = request.GET.get('home')
-        if House.objects.filter(Address = home).count():
-            info = House.objects.get(Address = home)
-        elif Apartment.objects.filter(Name = home).count() > 0:
-            info = Apartment.objects.get(Name = home)
-        elif Dorms.objects.filter(Name = home).count() > 0:
-            info = Dorm.objects.get(Name = home)
-        #houses = House.objects.filter(Address__icontains=home)
-        #apartments = Apartment.objects.filter(Address__icontains=home)
-        #dorms = Dorms.objects.filter(Address__icontains=home)
-        #home_info = chain(houses, apartments, dorms)
 
-        return render(request, 'homes/info.html', {'home':info})
+def info(request):
+    home = request.GET.get('home')
+    if House.objects.filter(Address=home).count():
+        data = House.objects.get(Address=home)
+    elif Apartment.objects.filter(Name=home).count() > 0:
+        data = Apartment.objects.get(Name=home)
+    elif Dorms.objects.filter(Name=home).count() > 0:
+        data = Dorms.objects.get(Name=home)
+    #houses = House.objects.filter(Address__icontains=home)
+    #apartments = Apartment.objects.filter(Address__icontains=home)
+    #dorms = Dorms.objects.filter(Address__icontains=home)
+    #home_info = chain(houses, apartments, dorms)
+
+    return render(request, 'homes/info.html', {'home': data})
+
 
 def search(request):
     houses = QuerySet()
@@ -52,27 +54,27 @@ def search(request):
                     houses = House.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         houses = filters.filter_price(houses, price_value, price_select)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': houses})
+                        result = render(request, 'homes/searchresults.html', {'homes_list': houses})
                 elif type_value == 'Apartment':
                     apartments = Apartment.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         apartments = filters.filter_price(apartments, price_value, price_select)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': apartments})
+                        result = render(request, 'homes/searchresults.html', {'homes_list': apartments})
                 elif type_value == 'Dorm':
                     dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
+                        result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
                 else:
                     houses = House.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         houses = filters.filter_price(houses, price_value, price_select)
-                    apartments = Apartment.objects.filter(Address__icontains=search_value)
+                        apartments = Apartment.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         apartments = filters.filter_price(apartments, price_value, price_select)
-                    dorms = Dorms.objects.filter(Address__icontains=search_value)
+                        dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
-                    queryset = chain(houses, apartments, dorms)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
+                        queryset = chain(houses, apartments, dorms)
+                        result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
     return result
