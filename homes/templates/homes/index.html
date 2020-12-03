@@ -86,6 +86,7 @@
         <input id='search' type='text' name='search' placeholder='Address search...'><br />
         <label for="type">Type:</label>
         <select id="type" name="type">
+            <option value="" selected disabled hidden>Choose here</option>
             <option value="All" selected>All</option>
             <option value="House">House</option>
             <option value="Apartment">Apartment</option>
@@ -93,6 +94,7 @@
         </select><br />
         <label for="price">Price:</label>
         <select id='priceselect' name='priceselect'>
+            <option value="" selected disabled hidden>Choose here</option>
             <option value='Less than'>Less than</option>
             <option value='Equal to'>Equal to</option>
             <option value='Greater than'>Greater than</option>
@@ -100,13 +102,39 @@
         <input id='price' type='text' name='price' placeholder='Price...'><br />
         <label for = 'bedrooms'>Bedrooms:</label>
         <select id = 'bedroomselect' name = 'bedroomselect'>
+            <option value="" selected disabled hidden>Choose here</option>
+            <option value = "Any">Any</option>
             <option value = "1">1</option>
             <option value = "2">2</option>
             <option value = "3">3</option>
             <option value = "4">4</option>
             <option value = "5">5</option>
             <option value = "6">6</option>
-        </select>
+        </select><br />
+        <label for = 'laundry'>Laundry:</label>
+        <select id='laundry' name='laundry'>
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value='Any'>Any</option>
+          <option value='None'>None</option>
+          <option value='Room'>In suite</option>/option>
+          <option value='Building'>In building</option>
+        </select><br />
+        <label for = 'kitchen'>Kitchen:</label>
+        <select id='kitchen' name='kitchen'>
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value='Any'>Any</option>
+          <option value='None'>None</option>
+          <option value='Half'>Half</option>/option>
+          <option value='Full'>Full</option>
+        </select><br />
+        <label for = 'AC'>AC:</label>
+        <select id='AC' name='AC'>
+          <option value="" selected disabled hidden>Choose here</option>
+          <option value='Any'>Any</option>
+          <option value='None'>None</option>
+          <option value='Window'>Window</option>/option>
+          <option value='Central'>Central</option>
+        </select><br />
         <button id='submit' type='submit' style="display: block">Submit</button>
     </form>
   </div>
