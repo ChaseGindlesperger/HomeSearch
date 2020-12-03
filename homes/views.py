@@ -1,9 +1,8 @@
 from itertools import chain
-import json
 from django.core import serializers
 from django.shortcuts import render
 from django.db.models import QuerySet
-from homes.models import House, Apartment, Dorms, Amenities, Food
+from homes.models import House, Apartment, Dorms, Food
 from . import filters
 
 # Create your views here.
@@ -18,7 +17,7 @@ def index(request):
 
 
 def info(request):
-    home = request.GET.get('home');
+    home = request.GET.get('home')
     if House.objects.filter(Address=home).count():
         data = House.objects.get(Address=home)
     elif Apartment.objects.filter(Name=home).count() > 0:
@@ -30,7 +29,7 @@ def info(request):
     #food_list = food[::1]
     #food_list = model_to_dict(food)
     #json_list = json.dumps(food_list)
-    return render(request, 'homes/info.html', {'home': data, 'food_list': food})
+    return render(request, 'homes/info.html', {'home': data, 'food_list': food_list})
 
 
 def search(request):
@@ -49,7 +48,7 @@ def search(request):
         bedroom_value = request.GET.get('bedroomselect')
         if bedroom_value is not None and bedroom_value != '' and bedroom_value != 'Any':
             bedroom_bool = True
-        laundry_value = request.GET.get('laundry');
+        laundry_value = request.GET.get('laundry')
         if laundry_value is not None and laundry_value != '' and laundry_value != 'Any':
             laundry_bool = True
         price_value = request.GET.get('price')
