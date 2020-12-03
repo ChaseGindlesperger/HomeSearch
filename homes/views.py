@@ -15,19 +15,6 @@ def homepage(request):
 def index(request):
     return render(request, 'homes/index.html')
 
-def sortByPrice(homelist):
-    price = {}
-    for home in homelist:
-        if House.objects.filter(Address=home).count():
-            data = House.objects.get(Address=home)
-        elif Apartment.objects.filter(Name=home).count() > 0:
-            data = Apartment.objects.get(Name=home)
-        elif Dorms.objects.filter(Name=home).count() > 0:
-            data = Dorms.objects.get(Name=home)
-        price[data.Price] = home
-    sorted(price)
-    return price
-
 
 def info(request):
     home = request.GET.get('home')
@@ -42,11 +29,7 @@ def info(request):
     #food_list = food[::1]
     #food_list = model_to_dict(food)
     #json_list = json.dumps(food_list)
-<<<<<<< HEAD
-    return render(request, 'homes/info.html', {'home': data, 'food_list': food})
-=======
     return render(request, 'homes/info.html', {'home': data, 'food_list': food_list})
->>>>>>> 099dc87df7b2c2601330b3b4739cdc19002f50b0
 
 
 def search(request):
@@ -78,10 +61,10 @@ def search(request):
             kitchen_bool = True
         AC_value = request.GET.get('AC')
         if AC_value is not None and AC_value != '' and AC_value != 'Any':
-            AC_bool = True   
+            AC_bool = True
         commonareas_value = request.GET.get('commonareas')
         if commonareas_value is not None and commonareas_value != '' and commonareas_value != 'Any':
-            commonareas_bool = True   
+            commonareas_bool = True
         if 'search' in request.GET:
             if request.GET.get('search') is not None and request.GET.get('search') != '':
                 search_value = request.GET.get('search')
@@ -170,6 +153,5 @@ def search(request):
                     if commonareas_bool:
                         dorms = dorms.filter(amenities__CommonAreas=commonareas_value)
                     queryset = chain(houses, apartments, dorms)
-                    querysetq = sorted(queryset, key=lambda  x: x.Price)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': querysetq})
+                    result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
     return result
