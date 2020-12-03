@@ -41,7 +41,80 @@
           font-size: 3.5rem;
         }
       }
-    </style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+      }
+
+      html {
+        box-sizing: border-box;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      .column {
+        float: left;
+        width: 33%;
+        margin-bottom: 32px;
+        padding: 0 8px;
+      }
+
+      .grid-container {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+      }
+
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin: 4px;
+        background-color: Gainsboro;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        position:relative;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .container::after, .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .title {
+        color: grey;
+      }
+
+      .button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .button:hover {
+        background-color: #555;
+      }
+
+      @media screen and (max-width: 650px) {
+        .column {
+          width: 100%;
+          display: block;
+        }
+      }
+      </style>
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
   </head>
@@ -73,22 +146,26 @@
   <div class="starter-template">
     <h1>Bootstrap starter template</h1>
     <h1>Search Results</h1>
-    <ul>
-      {% for home in homes_list %}
-          <a class="btn-link" href="info/?home={{home}}" value="{{home}}">
-              <img src="{{ home.image.url }}" class="img-fluid" alt="Responsive image" width="200" height = "400">
-          </a>
+    <div class="grid-container">
+    {% for home in homes_list %}
+    <div class="column">
+      <div class="card">
+        <a class="btn-link" href="info/?home={{home}}" value="{{home}}">
+            <img src="{{ home.image.url }}" class="img-fluid" alt="Xavier">
+        </a>
+        <div class="container">
           {% if home.Name == null %}
-          <p>
-          {{ home.Address }}, ${{home.Price}}
-        </p>
           {% else %}
-          <p>
-          {{home.Name}}, {{ home.Address }}, ${{home.Price}}
-        </p>
+          <p>{{home.Name}}</p>
           {% endif %}
-      {% endfor %}
-    </ul>
+          <p>{{home.Address}}</p>
+          <p>${{home.Price}}</p>
+          <p><a href="info/?home={{home}}" value="{{home}}"><button class="button">More Info</button></a></p>
+        </div>
+      </div>
+  </div>
+    {% endfor %}
+    </div>
   </div>
 </body>
 </main><!-- /.container -->
