@@ -1,7 +1,9 @@
 from itertools import chain
+import json
+from django.core import serializers
 from django.shortcuts import render
 from django.db.models import QuerySet
-from homes.models import House, Apartment, Dorms, Amenities
+from homes.models import House, Apartment, Dorms, Amenities, Food
 from . import filters
 
 # Create your views here.
@@ -23,8 +25,17 @@ def info(request):
         data = Apartment.objects.get(Name=home)
     elif Dorms.objects.filter(Name=home).count() > 0:
         data = Dorms.objects.get(Name=home)
+<<<<<<< HEAD
 
     return render(request, 'homes/info.html', {'home': data})
+=======
+    food = Food.objects.all()
+    food_list = serializers.serialize('json', food)
+    #food_list = food[::1]
+    #food_list = model_to_dict(food)
+    #json_list = json.dumps(food_list)
+    return render(request, 'homes/info.html', {'home': data, 'food_list': food})
+>>>>>>> c5ae9b2a9a1d47e782a8b6d06ecc07ea88b6d2fc
 
 
 def search(request):
@@ -68,8 +79,6 @@ def search(request):
                     dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
-                    if bedroom_bool:
-                        dorms = dorms.filter(Bedrooms=bedroom_value)
                     result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
                 else:
                     houses = House.objects.filter(Address__icontains=search_value)
