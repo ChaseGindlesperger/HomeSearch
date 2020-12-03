@@ -19,6 +19,16 @@ def index(request):
 
 def info(request):
     home = request.GET.get('home')
+<<<<<<< HEAD
+    if House.objects.filter(Address = home).count():
+        info = House.objects.get(Address = home)
+    elif Apartment.objects.filter(Name = home).count() > 0:
+        info = Apartment.objects.get(Name = home)
+    elif Dorms.objects.filter(Name = home).count() > 0:
+        info = Dorm.objects.get(Name = home)
+
+    return render(request, 'homes/info.html', {'home':info})
+=======
     if House.objects.filter(Address=home).count():
         data = House.objects.get(Address=home)
     elif Apartment.objects.filter(Name=home).count() > 0:
@@ -32,6 +42,7 @@ def info(request):
     #json_list = json.dumps(food_list)
     return render(request, 'homes/info.html', {'home': data, 'food_list': food})
 
+>>>>>>> fb5f2a97511db32cfa080085f8e88e710f9168d2
 
 def search(request):
     houses = QuerySet()
