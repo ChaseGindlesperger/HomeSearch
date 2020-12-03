@@ -38,7 +38,7 @@ class Apartment(models.Model):
         return self.Name
 
 class Food(models.Model):
-    Address = models.CharField(max_length=50)
+    Address = models.CharField(max_length=100)
     Name = models.CharField(max_length=50, null = False)
     def __str__ (self):
         return self.Address

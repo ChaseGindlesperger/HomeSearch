@@ -144,8 +144,10 @@
 <body style="background-color:slategrey">
 
   <div class="starter-template">
+    sortedprices = sorted(homes_list, key=lambda x: x.price)
     <h1>Bootstrap starter template</h1>
     <h1>Search Results</h1>
+
     <div class="grid-container">
     {% for home in homes_list %}
     <div class="column">

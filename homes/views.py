@@ -16,6 +16,19 @@ def homepage(request):
 def index(request):
     return render(request, 'homes/index.html')
 
+def sortByPrice(homelist):
+    price = {}
+    for home in homelist:
+        if House.objects.filter(Address=home).count():
+            data = House.objects.get(Address=home)
+        elif Apartment.objects.filter(Name=home).count() > 0:
+            data = Apartment.objects.get(Name=home)
+        elif Dorms.objects.filter(Name=home).count() > 0:
+            data = Dorms.objects.get(Name=home)
+        price[data.Price] = home
+    sorted(price)
+    return price
+
 
 def info(request):
     home = request.GET.get('home')
@@ -25,17 +38,12 @@ def info(request):
         data = Apartment.objects.get(Name=home)
     elif Dorms.objects.filter(Name=home).count() > 0:
         data = Dorms.objects.get(Name=home)
-<<<<<<< HEAD
-
-    return render(request, 'homes/info.html', {'home': data})
-=======
     food = Food.objects.all()
     food_list = serializers.serialize('json', food)
     #food_list = food[::1]
     #food_list = model_to_dict(food)
     #json_list = json.dumps(food_list)
     return render(request, 'homes/info.html', {'home': data, 'food_list': food})
->>>>>>> c5ae9b2a9a1d47e782a8b6d06ecc07ea88b6d2fc
 
 
 def search(request):
@@ -95,5 +103,6 @@ def search(request):
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
                     queryset = chain(houses, apartments, dorms)
-                    result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
+                    querysetq = sorted(queryset, key=lambda  x: x.Price)
+                    result = render(request, 'homes/searchresults.html', {'homes_list': querysetq})
     return result

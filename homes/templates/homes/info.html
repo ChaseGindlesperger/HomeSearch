@@ -48,7 +48,7 @@
         display:inline-block;
         width: 49%
       }
-      
+
       #img {
         float: left;
       }
@@ -89,7 +89,7 @@
           thirdname = '';
 
       x = {
-        counterInternal: 1,
+        counterInternal: 0,
         counterListener: function(val) {},
         set counter(val) {
           this.counterInternal = val;
@@ -149,18 +149,18 @@
                 avoidHighways: false,
                 avoidTolls: false,
                 unitSystem: google.maps.UnitSystem.IMPERIAL
-            }, 
+            },
             callback
         );
       }
-      
+
       function callback(response, status) {
           var dest = response.destinationAddresses[0],
               dist = response.rows[0].elements[0].distance.text,
               orig = response.originAddresses[0],
               distInt = parseFloat(dist);
 
-          if(status=="OK") {            
+          if(status=="OK") {
             if (distInt <= firstmin) {
               thirdmin = secondmin;
               thirdaddress = secondaddress;
@@ -231,7 +231,7 @@
             <p class = 'textinfo'>
               Name: {{home.Name}} <br />
               Address: {{ home.Address }} <br />
-              Price: ${{home.Price}} <br /> 
+              Price: ${{home.Price}} <br />
               Bedrooms: {{home.Bedrooms}} <br />
             </p>
           {% endif %}
