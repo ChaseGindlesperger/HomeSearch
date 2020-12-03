@@ -44,6 +44,7 @@ def search(request):
     laundry_bool = False
     kitchen_bool = False
     AC_bool = False
+    commonareas_bool = False
     if request.method == "GET":
         bedroom_value = request.GET.get('bedroomselect')
         if bedroom_value is not None and bedroom_value != '' and bedroom_value != 'Any':
@@ -61,6 +62,9 @@ def search(request):
         AC_value = request.GET.get('AC')
         if AC_value is not None and AC_value != '' and AC_value != 'Any':
             AC_bool = True   
+        commonareas_value = request.GET.get('commonareas')
+        if commonareas_value is not None and commonareas_value != '' and commonareas_value != 'Any':
+            commonareas_bool = True   
         if 'search' in request.GET:
             if request.GET.get('search') is not None and request.GET.get('search') != '':
                 search_value = request.GET.get('search')
@@ -79,6 +83,8 @@ def search(request):
                         houses = houses.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         houses = houses.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        houses = houses.filter(amenities__CommonAreas=commonareas_value)
                     result = render(request, 'homes/searchresults.html', {'homes_list': houses})
                 elif type_value == 'Apartment':
                     apartments = Apartment.objects.filter(Address__icontains=search_value)
@@ -92,6 +98,8 @@ def search(request):
                         apartments = apartments.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         apartments = apartments.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        apartments = apartments.filter(amenities__CommonAreas=commonareas_value)
                     result = render(request, 'homes/searchresults.html', {'homes_list': apartments})
                 elif type_value == 'Dorm':
                     dorms = Dorms.objects.filter(Address__icontains=search_value)
@@ -103,6 +111,8 @@ def search(request):
                         dorms = dorms.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         dorms = dorms.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        dorms = dorms.filter(amenities__CommonAreas=commonareas_value)
                     result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
                 else:
                     houses = House.objects.filter(Address__icontains=search_value)
@@ -116,6 +126,8 @@ def search(request):
                         houses = houses.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         houses = houses.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        houses = houses.filter(amenities__CommonAreas=commonareas_value)
                     apartments = Apartment.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         apartments = filters.filter_price(apartments, price_value, price_select)
@@ -127,6 +139,8 @@ def search(request):
                         apartments = apartments.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         apartments = apartments.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        apartments = apartments.filter(amenities__CommonAreas=commonareas_value)
                     dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
@@ -136,6 +150,8 @@ def search(request):
                         dorms = dorms.filter(amenities__Kitchen=kitchen_value)
                     if AC_bool:
                         dorms = dorms.filter(amenities__AC=AC_value)
+                    if commonareas_bool:
+                        dorms = dorms.filter(amenities__CommonAreas=commonareas_value)
                     queryset = chain(houses, apartments, dorms)
                     result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
     return result
