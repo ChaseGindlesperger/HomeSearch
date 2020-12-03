@@ -72,32 +72,6 @@
 
   <div class="starter-template">
     <h1>Bootstrap starter template</h1>
-    <script>
-        function setInputFilter(textbox, inputFilter) {
-        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-        textbox.addEventListener(event, function() {
-          if (inputFilter(this.value)) {
-            this.oldValue = this.value;
-            this.oldSelectionStart = this.selectionStart;
-            this.oldSelectionEnd = this.selectionEnd;
-          } else if (this.hasOwnProperty("oldValue")) {
-            this.value = this.oldValue;
-            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-          } else {
-            this.value = "";
-          }
-        });
-      });
-
-      setInputFilter(document.getElementById("price"), function(value) {
-        return /^-?\d*$/.test(value);
-      });
-
-      setInputFilter(document.getElementById("bedrooms"), function(value) {
-        return /^-?\d*$/.test(value);
-      });
-    }
-    </script>
 
     <style>
         #priceselect
@@ -105,8 +79,11 @@
             width: 100px;
         }
     </style>
+
     <h1> SEARCH</h1>
     <form method="GET" action = "./search_results">
+        <label for ='address'>Address:</label>
+        <input id='search' type='text' name='search' placeholder='Address search...'><br />
         <label for="type">Type:</label>
         <select id="type" name="type">
             <option value="All" selected>All</option>
@@ -114,15 +91,23 @@
             <option value="Apartment">Apartment</option>
             <option value="Dorm">Dormitory</option>
         </select><br />
-        <input id='search' type='text' name='search' placeholder='Address search...'><br />
-        <p>Price</p>
+        <label for="price">Price:</label>
         <select id='priceselect' name='priceselect'>
             <option value='Less than'>Less than</option>
             <option value='Equal to'>Equal to</option>
             <option value='Greater than'>Greater than</option>
         </select>
         <input id='price' type='text' name='price' placeholder='Price...'><br />
-        <button id='submit' type='submit'>Submit</button>
+        <label for = 'bedrooms'>Bedrooms:</label>
+        <select id = 'bedroomselect' name = 'bedroomselect'>
+            <option value = "1">1</option>
+            <option value = "2">2</option>
+            <option value = "3">3</option>
+            <option value = "4">4</option>
+            <option value = "5">5</option>
+            <option value = "6">6</option>
+        </select>
+        <button id='submit' type='submit' style="display: block">Submit</button>
     </form>
   </div>
 </body>
