@@ -41,7 +41,7 @@ class Food(models.Model):
     Address = models.CharField(max_length=50)
     Name = models.CharField(max_length=50, null = False)
     def __str__ (self):
-        return self.Name
+        return self.Address
 
 class Dorms(models.Model):
     amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)

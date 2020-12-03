@@ -2,6 +2,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBZSS5t1n7LV-p9Bbw2T9iWF5oylKu2Ifk"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -64,6 +66,124 @@
   </head>
 
   <body>
+    <script type="text/javascript">
+      service = new google.maps.DistanceMatrixService();
+      var foodList = [
+        {% for food in food_list %}
+          {% if not forloop.first %},{% endif %}
+            {
+              Name: "{{ food.Name }}",
+              Address: "{{ food.Address }}",
+            }
+        {% endfor %}
+      ]
+      var test = 0,
+          firstmin = 50.5,
+          firstaddress = '',
+          firstname = '',
+          secondmin = 50.5,
+          secondaddress = '',
+          secondname = '',
+          thirdmin = 50.5,
+          thirdaddress = '',
+          thirdname = '';
+
+      x = {
+        counterInternal: 1,
+        counterListener: function(val) {},
+        set counter(val) {
+          this.counterInternal = val;
+          this.counterListener(val);
+        },
+        get counter() {
+          return this.counterInternal;
+        },
+        registerListener: function(listener) {
+          this.counterListener = listener;
+        }
+      }
+
+      x.registerListener(function(val) {
+        if (x.counter == foodList.length) {
+          display();
+        }
+      });
+
+      function display() {
+        for (var i = 0; i < foodList.length; i++){
+          var obj = foodList[i];
+          if (obj['Address'] == thirdaddress){
+            thirdname = obj['Name'];
+          }
+          if (obj['Address'] == secondaddress){
+            secondname = obj['Name'];
+          }
+          if (obj['Address'] == firstaddress){
+            firstname = obj['Name'];
+          }
+        }
+        first = document.getElementById('first');
+        second = document.getElementById('second');
+        third = document.getElementById('third');
+        first.innerHTML = firstname + " - " + firstaddress + ": " + firstmin + " mi.";
+        second.innerHTML = secondname + " - " + secondaddress + ": " + secondmin + " mi.";
+        third.innerHTML = thirdname + " - " + thirdaddress + ": " + thirdmin + " mi.";
+      }
+
+      function findDistances () {
+        for (var i = 0; i < foodList.length; i++){
+          var obj = foodList[i];
+          foodname = obj['Name'];
+          foodaddress = obj['Address'];
+          getDistance(foodaddress);
+        }
+      }
+      findDistances();
+
+      function getDistance(foodaddress) {
+        service.getDistanceMatrix(
+            {
+                origins: ["{{home.Address}}"],
+                destinations: [foodaddress],
+                travelMode: google.maps.TravelMode.DRIVING,
+                avoidHighways: false,
+                avoidTolls: false,
+                unitSystem: google.maps.UnitSystem.IMPERIAL
+            }, 
+            callback
+        );
+      }
+      
+      function callback(response, status) {
+          var dest = response.destinationAddresses[0],
+              dist = response.rows[0].elements[0].distance.text,
+              orig = response.originAddresses[0],
+              distInt = parseFloat(dist);
+
+          if(status=="OK") {            
+            if (distInt <= firstmin) {
+              thirdmin = secondmin;
+              thirdaddress = secondaddress;
+              secondmin = firstmin;
+              secondaddress = firstaddress;
+              firstmin = distInt;
+              firstaddress = dest;
+            } else if (distInt <= secondmin) {
+              thirdmin = secondmin;
+              thirdaddress = secondaddress;
+              secondmin = distInt;
+              secondaddress = dest;
+            } else if (distInt <= thirdmin) {
+              thirdmin = distInt;
+              thirdaddress = dest;
+            }
+            x.counter++;
+          } else {
+            alert("Error: " + status);
+          }
+      }
+
+    </script>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="#">UAkron Housing</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +244,12 @@
       frameborder="0" style="border:0"
       style = 'display:block'
       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZSS5t1n7LV-p9Bbw2T9iWF5oylKu2Ifk&q={{home.Address}}" allowfullscreen>
-  </iframe>
+    </iframe>
+    <br>
+    <p>Closest Food Options:</p>
+    <p id="first"></p>
+    <p id="second"></p>
+    <p id="third"></p>
   </body>
 </main><!-- /.container -->
 
