@@ -39,7 +39,11 @@ def search(request):
     price_value = ''
     price_select = ''
     price_bool = False
+    bedroom_bool = False
     if request.method == "GET":
+        bedroom_value = request.GET.get('bedroomselect')
+        if bedroom_value is not None and bedroom_value != '':
+            bedroom_bool = True
         price_value = request.GET.get('price')
         price_select = request.GET.get('priceselect')
         if 'search' in request.GET:
@@ -54,27 +58,37 @@ def search(request):
                     houses = House.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         houses = filters.filter_price(houses, price_value, price_select)
-                        result = render(request, 'homes/searchresults.html', {'homes_list': houses})
+                    if bedroom_bool:
+                        houses = houses.filter(Bedrooms=bedroom_value)
+                    result = render(request, 'homes/searchresults.html', {'homes_list': houses})
                 elif type_value == 'Apartment':
                     apartments = Apartment.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         apartments = filters.filter_price(apartments, price_value, price_select)
-                        result = render(request, 'homes/searchresults.html', {'homes_list': apartments})
+                    if bedroom_bool:
+                        apartments = apartments.filter(Bedrooms=bedroom_value)
+                    result = render(request, 'homes/searchresults.html', {'homes_list': apartments})
                 elif type_value == 'Dorm':
                     dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
-                        result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
+                    if bedroom_bool:
+                        dorms = dorms.filter(Bedrooms=bedroom_value)
+                    result = render(request, 'homes/searchresults.html', {'homes_list': dorms})
                 else:
                     houses = House.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         houses = filters.filter_price(houses, price_value, price_select)
-                        apartments = Apartment.objects.filter(Address__icontains=search_value)
+                    if bedroom_bool:
+                        houses = houses.filter(Bedrooms=bedroom_value)
+                    apartments = Apartment.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         apartments = filters.filter_price(apartments, price_value, price_select)
-                        dorms = Dorms.objects.filter(Address__icontains=search_value)
+                    if bedroom_bool:
+                        apartments = apartments.filter(Bedrooms=bedroom_value)
+                    dorms = Dorms.objects.filter(Address__icontains=search_value)
                     if price_bool:
                         dorms = filters.filter_price(dorms, price_value, price_select)
-                        queryset = chain(houses, apartments, dorms)
-                        result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
+                    queryset = chain(houses, apartments, dorms)
+                    result = render(request, 'homes/searchresults.html', {'homes_list': queryset})
     return result

@@ -74,14 +74,20 @@
     <div class="starter-template">
       <br> <br> <br>
       <img src="{{ home.image.url }}" alt="Responsive image" width="350" height = "350">
-      {% if home.Name == null %}
-      <p>
-        {{ home.Address }}, ${{home.Price}}
-      </p>
+      {% if home.Name == null %} <!--Houses-->
+        <p>
+          {{ home.Address }}, ${{home.Price}}, {{home.Bedrooms}} 
+        </p>
       {% else %}
-      <p>
-      {{home.Name}}, {{ home.Address }}, ${{home.Price}}
-      </p>
+        {% if home.Bedrooms == null %} <!--Dorms-->
+          <p>
+          {{home.Name}}, {{ home.Address }}, ${{home.Price}}
+          </p>
+        {% else %} <!--Apartments-->
+          <p>
+            {{home.Name}}, {{ home.Address }}, ${{home.Price}}, {{home.Bedrooms}}
+          </p>
+        {% endif %}
       {% endif %}
     </div>
     <iframe
@@ -90,7 +96,7 @@
       frameborder="0" style="border:0"
       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZSS5t1n7LV-p9Bbw2T9iWF5oylKu2Ifk&q={{home.Address}}" allowfullscreen>
     </iframe>
-    
+
   </body>
 </main><!-- /.container -->
 
