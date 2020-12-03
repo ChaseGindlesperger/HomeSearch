@@ -41,6 +41,23 @@
           font-size: 3.5rem;
         }
       }
+
+      .apartmentinfo {
+        display:inline-block;
+        width: 49%
+      }
+      
+      #img {
+        float: left;
+      }
+
+      #text {
+        float: right;
+      }
+
+      .textinfo {
+        font-size: 32px;
+      }
     </style>
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
@@ -73,30 +90,41 @@
 
     <div class="starter-template">
       <br> <br> <br>
-      <img src="{{ home.image.url }}" alt="Responsive image" width="350" height = "350">
-      {% if home.Name == null %} <!--Houses-->
-        <p>
-          {{ home.Address }}, ${{home.Price}}, {{home.Bedrooms}} 
-        </p>
-      {% else %}
-        {% if home.Bedrooms == null %} <!--Dorms-->
-          <p>
-          {{home.Name}}, {{ home.Address }}, ${{home.Price}}
+      <div class = 'apartmentinfo' id = 'img'>
+        <img src="{{ home.image.url }}" alt="Responsive image" width="350" height = "350">
+      </div>
+      <div class = 'apartmentinfo' id = 'text'>
+        {% if home.Name == null %} <!--Houses-->
+          <p class = "textinfo">
+            Adress: {{ home.Address }} <br />
+            Price: ${{home.Price}} <br />
+            Bedrooms: {{home.Bedrooms}} <br />
           </p>
-        {% else %} <!--Apartments-->
-          <p>
-            {{home.Name}}, {{ home.Address }}, ${{home.Price}}, {{home.Bedrooms}}
-          </p>
+        {% else %}
+          {% if home.Bedrooms == null %} <!--Dorms-->
+            <p class = 'textinfo'>
+              Name: {{home.Name}} <br />
+              Address: {{ home.Address }} <br />
+              Price: ${{home.Price}} <br />
+            </p>
+          {% else %} <!--Apartments-->
+            <p class = 'textinfo'>
+              Name: {{home.Name}} <br />
+              Address: {{ home.Address }} <br />
+              Price: ${{home.Price}} <br /> 
+              Bedrooms: {{home.Bedrooms}} <br />
+            </p>
+          {% endif %}
         {% endif %}
-      {% endif %}
+      </div>
     </div>
     <iframe
-      width="600"
-      height="450"
+      width="333"
+      height="250"
       frameborder="0" style="border:0"
+      style = 'display:block'
       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZSS5t1n7LV-p9Bbw2T9iWF5oylKu2Ifk&q={{home.Address}}" allowfullscreen>
-    </iframe>
-
+  </iframe>
   </body>
 </main><!-- /.container -->
 
