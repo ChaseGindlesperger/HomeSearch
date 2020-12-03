@@ -29,7 +29,7 @@ def info(request):
     #food_list = food[::1]
     #food_list = model_to_dict(food)
     #json_list = json.dumps(food_list)
-    return render(request, 'homes/info.html', {'home': data, 'food_list': food_list})
+    return render(request, 'homes/info.html', {'home': data, 'food_list': food})
 
 
 def search(request):
