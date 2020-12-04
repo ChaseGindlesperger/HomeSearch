@@ -43,22 +43,8 @@
           font-size: 3.5rem;
         }
       }
-
-      .apartmentinfo {
-        display:inline-block;
-        width: 49%
-      }
-
-      #img {
-        float: left;
-      }
-
-      #text {
-        float: right;
-      }
-
-      .textinfo {
-        font-size: 32px;
+      body {
+        font-family: Arial, Helvetica, sans-serif;
       }
     </style>
     <!-- Custom styles for this template -->
@@ -184,6 +170,7 @@
       }
 
     </script>
+
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="#">UAkron Housing</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -208,48 +195,98 @@
     <main role="main" class="container">
     <body style="background-color:slategrey">
 
+          <style>
+
+          .allinfo div{
+            background-color: Gainsboro;
+            height: 250px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+          }
+          .apartmentinfo {
+            float: left;
+            text-align: justify;
+            width: 60%;
+            justify-content: flex-end;
+            flex-direction: column;
+            position:relative;
+          }
+          .amenityinfo {
+            float: right;
+            text-align: justify;
+            width: 40%;
+          }
+
+          .textinfo {
+            font-size: 24px;
+          }
+          .food{
+            font-size: 24px;
+          }
+          </style>
+
     <div class="starter-template">
       <br> <br> <br>
-      <div class = 'apartmentinfo' id = 'img'>
-        <img src="{{ home.image.url }}" alt="Responsive image" width="350" height = "350">
+        <div>
+        <img src="{{ home.image.url }}" alt="Responsive image" width=100%>
       </div>
+      <div class = "allinfo">
       <div class = 'apartmentinfo' id = 'text'>
         {% if home.Name == null %} <!--Houses-->
           <p class = "textinfo">
-            Address: {{ home.Address }} <br />
-            Price: ${{home.Price}} <br />
-            Bedrooms: {{home.Bedrooms}} <br />
+            Address: {{ home.Address }} <br/>
+            Price: ${{home.Price}} a month<br/>
+            Bedrooms: {{home.Bedrooms}} <br/>
+            Bathrooms: {{home.Bathrooms}} <br/>
+            Safety: {{home.Safety}}<br/>
           </p>
         {% else %}
           {% if home.Bedrooms == null %} <!--Dorms-->
             <p class = 'textinfo'>
-              Name: {{home.Name}} <br />
-              Address: {{ home.Address }} <br />
-              Price: ${{home.Price}} <br />
+              Name: {{home.Name}} <br/>
+              Address: {{ home.Address }} <br/>
+              Price: ${{home.Price}} a month</br>
+              Roomstyle: {{home.Roomstyle}} <br/>
+              Bathrooms: {{home.Bathrooms}} <br/>
+              Safety: {{home.Safety}}<br/>
             </p>
           {% else %} <!--Apartments-->
             <p class = 'textinfo'>
-              Name: {{home.Name}} <br />
-              Address: {{ home.Address }} <br />
-              Price: ${{home.Price}} <br />
-              Bedrooms: {{home.Bedrooms}} <br />
+              Name: {{home.Name}} <br/>
+              Address: {{ home.Address }} <br/>
+              Price: ${{home.Price}} a month<br/>
+              Bedrooms: {{home.Bedrooms}} <br/>
+              Bathrooms: {{home.Bathrooms}} <br/>
+              Safety: {{home.Safety}}<br/>
             </p>
           {% endif %}
         {% endif %}
       </div>
-    </div>
+      <div class = "amenityinfo">
+            <p class = 'textinfo'>
+              Laundry: {{home.amenities.Laundry}} <br/>
+              Kitchen: {{ home.amenities.Kitchen }} <br/>
+              Common Areas: {{home.amenities.CommonAreas}} <br/>
+              Air Conditioning: {{home.amenities.AC}} <br/>
+              Furnished: {{home.amenities.Furnished}} <br/>
+              Internet and Cable: {{home.amenities.InternetTV}}<br/>
+            </p>
+          </div>
     <iframe
-      width="333"
-      height="250"
+      width="100%"
+      height="500"
       frameborder="0" style="border:0"
       style = 'display:block'
       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBZSS5t1n7LV-p9Bbw2T9iWF5oylKu2Ifk&q={{home.Address}}" allowfullscreen>
     </iframe>
     <br>
+    <div class= "food">
     <p>Closest Food Options:</p>
     <p id="first"></p>
     <p id="second"></p>
     <p id="third"></p>
+  </div>
+</div>
   </body>
 </main><!-- /.container -->
 

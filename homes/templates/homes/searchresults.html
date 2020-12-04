@@ -69,7 +69,7 @@
 
       .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        margin: 4px;
+
         background-color: Gainsboro;
         height: 100%;
         display: flex;
@@ -114,6 +114,10 @@
           display: block;
         }
       }
+      h1 {
+        font-size: 64px;
+        text-align: center;
+      }
       </style>
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
@@ -144,8 +148,9 @@
 <body style="background-color:slategrey">
 
   <div class="starter-template">
-    sortedprices = sorted(homes_list, key=lambda x: x.price)
-    <h1>Bootstrap starter template</h1>
+  </br>
+  </br>
+  </br>
     <h1>Search Results</h1>
 
     <div class="grid-container">
@@ -161,7 +166,12 @@
           <p>{{home.Name}}</p>
           {% endif %}
           <p>{{home.Address}}</p>
-          <p>${{home.Price}}</p>
+          <p>${{home.Price}} a month</p>
+          {% if home.Roomstyle == null %}
+          <p>{{home.Bedrooms}} Bedrooms</p>
+          {% else %}
+          <p>{{home.Roomstyle}}</p>
+          {% endif %}
           <p><a href="info/?home={{home}}" value="{{home}}"><button class="button">More Info</button></a></p>
         </div>
       </div>
