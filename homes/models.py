@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Amenities(models.Model):
-    Address = models.CharField(max_length=50)
+    Address = models.CharField(max_length=50, null = False)
     Laundry = models.CharField(null = False, default='N/A', max_length=50, choices=[('None', 'None'), ('Room', 'Room'), ('Building','Building')])
     Kitchen = models.CharField(null = False, default='N/A', max_length=50, choices=[('None', 'None'), ('Half', 'Half'), ('Full', 'Full')])
     CommonAreas =models.CharField(null = False, default='N/A', max_length=50, choices=[('None', 'None'), ('Few', 'Few'), ('Many', 'Many')])
@@ -16,7 +16,7 @@ class Amenities(models.Model):
 
 class House(models.Model):
     amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
-    Address = models.CharField(max_length=50)
+    Address = models.CharField(max_length=50, null = False)
     Bedrooms = models.IntegerField(null= False)
     Bathrooms = models.DecimalField(null = False, max_digits = 2, decimal_places = 1)
     Price = models.IntegerField(null = False)
@@ -27,7 +27,7 @@ class House(models.Model):
 
 class Apartment(models.Model):
     amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
-    Address = models.CharField(max_length=50)
+    Address = models.CharField(max_length=50, null = False)
     Name = models.CharField(max_length=50, null= False)
     Bedrooms = models.IntegerField(null= False)
     Bathrooms = models.DecimalField(null = False, max_digits = 2, decimal_places = 1)
@@ -45,7 +45,7 @@ class Food(models.Model):
 
 class Dorms(models.Model):
     amenities = models.ForeignKey(Amenities, on_delete= models.CASCADE)
-    Address = models.CharField(max_length=50)
+    Address = models.CharField(max_length=50, null = False)
     Name = models.CharField(max_length=50, null= False)
     Roomstyle = models.CharField(null = False, default='N/A', max_length=50, choices=[('Single', 'Single'), ('Shared Single', 'Shared Single'), ('Double', 'Double'), ('Triple', 'Triple'), ('Suite', 'Suite'), ('Apartment', 'Apartment')])
     Bathrooms = models.CharField(null = False, default='N/A', max_length=50, choices=[('Private', 'Private'), ('Communal', 'Communal')])

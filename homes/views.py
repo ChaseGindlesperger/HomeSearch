@@ -153,6 +153,6 @@ def search(request):
                     if commonareas_bool:
                         dorms = dorms.filter(amenities__CommonAreas=commonareas_value)
                     queryset = chain(houses, apartments, dorms)
-                    sortedSet = sorted(queryset, key=lambda x: (x.Price, x.Address))
+                    sortedSet = sorted(queryset, key=lambda x: (x.Price, x.amenities.Address))
                     result = render(request, 'homes/searchresults.html', {'homes_list': sortedSet})
     return result
